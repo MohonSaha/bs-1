@@ -1,24 +1,22 @@
 import mongoose from 'mongoose'
-import { Review } from '../review/review.model'
 import { ICourse } from './course.interface'
 import { Course } from './course.model'
 import AppError from '../../error/appError'
 import httpStatus from 'http-status'
-import { Category } from '../category/category.model'
 import { JwtPayload } from 'jsonwebtoken'
 
 const createCourseIntoDB = async (payload: ICourse, user: JwtPayload) => {
-  const { categoryId } = payload
+  // const { categoryId } = payload
   payload.createdBy = user.id
 
   // Check category validation
-  const isCategoryExist = await Category.findById(categoryId)
-  if (!isCategoryExist) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Category does not exist in database',
-    )
-  }
+  // const isCategoryExist = await Category.findById(categoryId)
+  // if (!isCategoryExist) {
+  //   throw new AppError(
+  //     httpStatus.BAD_REQUEST,
+  //     'Category does not exist in database',
+  //   )
+  // }
 
   const result = await Course.create(payload)
   return result
@@ -55,8 +53,9 @@ const getCourseWithReviewFromDB = async (id: string) => {
     select: '_id username email role',
   })
 
-  const reviews = await Review.find({ courseId: id })
-  const result = { course, reviews }
+  // const reviews = await Review.find({ courseId: id })
+  // const result = { course, reviews }
+  const result = { course }
   return result
 }
 
