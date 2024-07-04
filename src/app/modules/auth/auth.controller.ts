@@ -7,7 +7,6 @@ const registerUser = catchAsync(async (req, res) => {
   const result = await AuthService.registerUserIntoDB(req.body)
   const modifiedResult = JSON.parse(JSON.stringify(result))
   delete modifiedResult.password
-  delete modifiedResult.passwordChangeHistory
   delete modifiedResult.passwordChangeAt
 
   sendResponse(res, {
@@ -23,8 +22,6 @@ const loginUser = catchAsync(async (req, res) => {
   const modifiedResult = JSON.parse(JSON.stringify(result))
   if (modifiedResult.user) {
     delete modifiedResult.user.password
-    delete modifiedResult.user.passwordChangeHistory
-    delete modifiedResult.user.passwordChangeAt
   }
 
   sendResponse(res, {

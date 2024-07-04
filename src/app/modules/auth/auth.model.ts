@@ -1,14 +1,9 @@
 import { Schema, model } from 'mongoose'
-import { IPasswordHistory, IUser, UserModel } from './auth.interface'
+import { IUser, UserModel } from './auth.interface'
 import AppError from '../../error/appError'
 import httpStatus from 'http-status'
 import bcrypt from 'bcrypt'
 import config from '../../config'
-
-const passwordHistorySchema: Schema<IPasswordHistory> = new Schema({
-  password: { type: String, required: true },
-  time: { type: Date, required: true },
-})
 
 const userSchema = new Schema<IUser, UserModel>(
   {
@@ -26,17 +21,6 @@ const userSchema = new Schema<IUser, UserModel>(
       type: String,
       required: true,
       select: 0,
-    },
-    passwordChangeAt: {
-      type: Date,
-    },
-    passwordChangeHistory: {
-      type: [passwordHistorySchema],
-      default: [],
-    },
-    role: {
-      type: String,
-      enum: ['user', 'admin'],
     },
   },
   {
